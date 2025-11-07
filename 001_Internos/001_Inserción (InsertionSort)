@@ -1,0 +1,17 @@
+def insertion_sort(arr):
+    print("Inicio del algoritmo Insertion Sort")
+    for i in range(1, len(arr)):
+        key = arr[i]           # Elemento que vamos a insertar
+        j = i - 1
+        print(f"\nInsertando {key} en la parte ordenada: {arr[:i]}")
+        
+        # Desplazamos hacia la derecha los elementos mayores que key
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+            print(f"Desplazando {arr[j+1]} a la derecha → {arr}")
+        
+        arr[j + 1] = key
+        print(f"Insertado {key} → {arr}")
+    print("\nArreglo final ordenado:", arr)
+    return arr

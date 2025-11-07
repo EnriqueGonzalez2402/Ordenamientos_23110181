@@ -1,0 +1,18 @@
+def selection_sort(arr):
+    print("Inicio del algoritmo Selection Sort")
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        print(f"\nIteración {i+1}: arreglo actual → {arr}")
+        
+        # Buscar el menor elemento del resto del arreglo
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        
+        # Intercambiamos si encontramos un elemento menor
+        if min_idx != i:
+            print(f"Intercambiando {arr[i]} con {arr[min_idx]}")
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    print("\nArreglo final ordenado:", arr)
+    return arr

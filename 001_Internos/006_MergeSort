@@ -1,0 +1,28 @@
+def merge_sort(arr, profundidad=0):
+    indent = "  " * profundidad
+    print(f"{indent}MergeSort → {arr}")
+    
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    izquierda = merge_sort(arr[:mid], profundidad + 1)
+    derecha = merge_sort(arr[mid:], profundidad + 1)
+    
+    fusionado = merge(izquierda, derecha)
+    print(f"{indent}Fusión de {izquierda} + {derecha} = {fusionado}")
+    return fusionado
+
+def merge(left, right):
+    resultado = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            resultado.append(left[i])
+            i += 1
+        else:
+            resultado.append(right[j])
+            j += 1
+    resultado.extend(left[i:])
+    resultado.extend(right[j:])
+    return resultado

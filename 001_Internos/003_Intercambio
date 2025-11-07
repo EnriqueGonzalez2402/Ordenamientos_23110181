@@ -1,0 +1,12 @@
+
+def bubble_sort(arr):
+    print("Inicio del algoritmo Bubble Sort")
+    n = len(arr)
+    for i in range(n):
+        print(f"\nPasada {i+1}: {arr}")
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                print(f"Intercambiando {arr[j]} y {arr[j+1]}")
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    print("\nArreglo final ordenado:", arr)
+    return arr

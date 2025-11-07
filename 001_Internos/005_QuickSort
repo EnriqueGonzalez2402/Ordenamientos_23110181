@@ -1,0 +1,14 @@
+def quicksort(arr, profundidad=0):
+    indent = "  " * profundidad
+    print(f"{indent}QuickSort → {arr}")
+    if len(arr) <= 1:
+        return arr
+    pivote = arr[len(arr) // 2]
+    print(f"{indent}Pivote elegido: {pivote}")
+    
+    izquierda = [x for x in arr if x < pivote]
+    centro = [x for x in arr if x == pivote]
+    derecha = [x for x in arr if x > pivote]
+    
+    print(f"{indent}Izquierda: {izquierda}, Centro: {centro}, Derecha: {derecha}")
+    return quicksort(izquierda, profundidad+1) + centro + quicksort(derecha, profundidad+1)
