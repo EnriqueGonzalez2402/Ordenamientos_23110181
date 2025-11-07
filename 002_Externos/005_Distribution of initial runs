@@ -1,0 +1,10 @@
+def distribution_of_initial_runs(arr, memory_size=3):
+    print("Inicio de Distribution of Initial Runs")
+    runs = []
+    for i in range(0, len(arr), memory_size):
+        bloque = arr[i:i+memory_size]
+        bloque_ordenado = sorted(bloque)
+        print(f"Run inicial: {bloque_ordenado}")
+        runs.append(bloque_ordenado)
+    print("Todas las corridas iniciales generadas:", runs)
+    return runs

@@ -1,0 +1,35 @@
+def merge_files(run1, run2):
+    result = []
+    i = j = 0
+    while i < len(run1) and j < len(run2):
+        if run1[i] < run2[j]:
+            result.append(run1[i])
+            i += 1
+        else:
+            result.append(run2[j])
+            j += 1
+    result.extend(run1[i:])
+    result.extend(run2[j:])
+    return result
+
+def straight_merge_sort(arr, run_size=2):
+    print("Inicio de Straight Merging Sort")
+    
+    # 1️⃣ Crear runs ordenados
+    runs = [sorted(arr[i:i+run_size]) for i in range(0, len(arr), run_size)]
+    print("Runs iniciales:", runs)
+    
+    # 2️⃣ Fusión sucesiva
+    while len(runs) > 1:
+        nuevos_runs = []
+        for i in range(0, len(runs), 2):
+            if i + 1 < len(runs):
+                fusion = merge_files(runs[i], runs[i + 1])
+                nuevos_runs.append(fusion)
+                print(f"Fusionando {runs[i]} + {runs[i+1]} → {fusion}")
+            else:
+                nuevos_runs.append(runs[i])
+        runs = nuevos_runs
+    
+    print("Resultado final:", runs[0])
+    return runs[0]
