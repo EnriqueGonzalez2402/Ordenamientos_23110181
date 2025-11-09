@@ -1,16 +1,86 @@
+#   ALGORITMO: BALANCED MULTIWAY MERGE SORT (Mezcla balanceada de múltiples vías)
+# Descripción:
+#   Este algoritmo extiende la idea de la mezcla directa o natural,
+#   realizando fusiones balanceadas entre varios “runs” al mismo tiempo.
+#   En este caso, se hace una fusión de 3 en 3 (multiway merge de 3 vías).
+# ============================================================
+
+
+# ------------------------------------------------------------
+# FUNCIÓN AUXILIAR: merge_files()
+# Une dos listas ordenadas en una sola lista ordenada.
+# (Debe estar definida antes de llamar a balanced_multiway_merge)
+# ------------------------------------------------------------
+def merge_files(run1, run2):
+    result = []     # Lista resultado para almacenar la fusión
+    i = j = 0       # Índices para recorrer cada lista
+
+    while i < len(run1) and j < len(run2):
+        if run1[i] < run2[j]:
+            result.append(run1[i])
+            i += 1
+        else:
+            result.append(run2[j])
+            j += 1
+
+    # Agregar los elementos restantes (si hay)
+    result.extend(run1[i:])
+    result.extend(run2[j:])
+    return result
+
+
+# ------------------------------------------------------------
+# FUNCIÓN PRINCIPAL: balanced_multiway_merge()
+# Realiza una fusión balanceada de múltiples vías.
+# ------------------------------------------------------------
 def balanced_multiway_merge(runs):
-    print("Inicio de Balanced Multiway Merge Sort")
-    paso = 1
+    """
+    Realiza el proceso de mezcla balanceada de múltiples vías.
+
+    Parámetros:
+        runs (list of lists): Lista de sublistas (runs) ya ordenadas
+                              que serán fusionadas progresivamente.
+    """
+
+    print("Inicio del algoritmo Balanced Multiway Merge Sort")
+
+    paso = 1  # Contador para indicar el número de iteración
+    # Mientras haya más de un run, seguimos fusionando
     while len(runs) > 1:
         print(f"\n--- Paso {paso} ---")
         nuevos_runs = []
-        for i in range(0, len(runs), 3):  # fusión de 3 en 3
+
+        # Recorre la lista en bloques de 3 runs
+        for i in range(0, len(runs), 3):
+            # Inicia con el primer run del bloque
             merged = runs[i]
-            for j in range(i+1, min(i+3, len(runs))):
+
+            # Fusiona los siguientes dos (si existen)
+            for j in range(i + 1, min(i + 3, len(runs))):
                 merged = merge_files(merged, runs[j])
-            print(f"Fusionando {runs[i:i+3]} → {merged}")
+
+            print(f"Fusionando {runs[i:i + 3]} → {merged}")
             nuevos_runs.append(merged)
+
+        # Actualiza los runs con las nuevas fusiones
         runs = nuevos_runs
         paso += 1
-    print("Resultado final:", runs[0])
+
+    print("\nResultado final:", runs[0])
     return runs[0]
+
+
+# ------------------------------------------------------------
+# PRUEBA RÁPIDA
+# ------------------------------------------------------------
+# Ejemplo de uso:
+# Cada run ya está ordenado previamente (como si viniera de archivos o bloques)
+runs_iniciales = [
+    [3, 9, 14],
+    [1, 7, 11],
+    [2, 5, 12],
+    [6, 8, 15],
+    [4, 10, 13]
+]
+
+balanced_multiway_merge(runs_iniciales)

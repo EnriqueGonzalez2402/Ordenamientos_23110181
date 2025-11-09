@@ -1,10 +1,45 @@
+# ALGORITMO: Distribution of Initial Runs
+# Descripción:
+#   Esta función simula la fase de distribución de corridas iniciales 
+#   utilizada en los algoritmos de ordenamiento externo, como el 
+#   Polyphase Sort o el Balanced Multiway Merge Sort. 
+#   Se divide el arreglo de entrada en bloques de tamaño limitado 
+#   (simulando la memoria disponible), se ordena cada bloque, 
+#   y se guarda como una "corrida inicial" (run) ordenada.
+#
+# Parámetros:
+#   arr : list
+#       Arreglo de números o datos a ordenar externamente.
+#   memory_size : int (por defecto = 3)
+#       Tamaño máximo de elementos que pueden procesarse 
+#       en memoria por bloque.
+#
+# Retorna:
+#   list
+#       Lista que contiene sublistas ordenadas (corridas iniciales).
+# -------------------------------------------------------------
+
 def distribution_of_initial_runs(arr, memory_size=3):
-    print("Inicio de Distribution of Initial Runs")
-    runs = []
+    print("Inicio de Distribution of Initial Runs")  # Mensaje inicial
+    runs = []  # Lista donde se almacenarán las corridas generadas
+
+    # 🔁 Recorrer el arreglo en bloques del tamaño de la memoria simulada
     for i in range(0, len(arr), memory_size):
-        bloque = arr[i:i+memory_size]
-        bloque_ordenado = sorted(bloque)
-        print(f"Run inicial: {bloque_ordenado}")
-        runs.append(bloque_ordenado)
+        bloque = arr[i:i + memory_size]        # Extrae un bloque de datos
+        bloque_ordenado = sorted(bloque)       # Ordena el bloque en memoria
+        print(f"Run inicial: {bloque_ordenado}")  # Muestra la corrida creada
+        runs.append(bloque_ordenado)           # Agrega la corrida a la lista
+
+    # Mostrar todas las corridas iniciales generadas
     print("Todas las corridas iniciales generadas:", runs)
     return runs
+
+
+# -------------------------------------------------------------
+# Ejemplo de ejecución
+# -------------------------------------------------------------
+# Arreglo de ejemplo que será dividido y ordenado por bloques
+datos = [10, 3, 5, 1, 9, 8, 4, 7, 2, 6]
+
+# Llamada a la función con un tamaño de memoria de 3 elementos
+distribution_of_initial_runs(datos, memory_size=3)

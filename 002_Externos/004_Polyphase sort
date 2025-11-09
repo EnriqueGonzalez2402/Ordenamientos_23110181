@@ -1,23 +1,94 @@
-def polyphase_sort(runs):
-    print("Inicio de Polyphase Sort (simulación)")
+#   ALGORITMO: POLYPHASE MERGE SORT (Simulación)
+# Descripción:
+#   Este algoritmo es una simulación del método de mezcla
+#   “Polyphase Merge Sort”, utilizado en ordenamiento externo
+#   (por ejemplo, cuando los datos no caben en memoria).
+#
+#   En la práctica, este método distribuye los runs entre
+#   varias "cintas" o unidades de almacenamiento siguiendo
+#   una secuencia Fibonacci para equilibrar el número de fusiones.
+#
+#   Aquí se muestra una versión simplificada que trabaja en memoria.
+# ============================================================
 
-    # Distribuir según Fibonacci
-    fib = [1, 1, 2, 3, 5, 8, 13]
+
+# ------------------------------------------------------------
+# FUNCIÓN AUXILIAR: merge_files()
+# Funde (mezcla) dos listas ordenadas en una sola lista ordenada.
+# ------------------------------------------------------------
+def merge_files(run1, run2):
+    result = []     # Lista resultado
+    i = j = 0       # Índices para recorrer ambas listas
+
+    # Comparación elemento a elemento
+    while i < len(run1) and j < len(run2):
+        if run1[i] < run2[j]:
+            result.append(run1[i])
+            i += 1
+        else:
+            result.append(run2[j])
+            j += 1
+
+    # Agregar los elementos restantes de cada lista (si quedan)
+    result.extend(run1[i:])
+    result.extend(run2[j:])
+
+    return result
+
+
+# ------------------------------------------------------------
+# FUNCIÓN PRINCIPAL: polyphase_sort()
+# Realiza la simulación del ordenamiento por mezcla polifásica.
+# ------------------------------------------------------------
+def polyphase_sort(runs):
+    """
+    Simula el algoritmo de mezcla polifásica (Polyphase Sort).
+
+    Parámetros:
+        runs (list of lists): Lista de sublistas (runs) ya ordenadas.
+    """
+
+    print("Inicio del algoritmo Polyphase Sort (simulación)")
+
+    # 1️⃣ Distribución inicial de los runs según la secuencia Fibonacci
+    fib = [1, 1, 2, 3, 5, 8, 13]   # Secuencia para balancear la carga
     distrib = fib[:len(runs)]
     print(f"Distribución inicial de runs según Fibonacci: {distrib}")
 
     paso = 1
+    # 2️⃣ Ciclo principal: realizar fusiones hasta que quede un solo run
     while len(runs) > 1:
         print(f"\n--- Fusión paso {paso} ---")
         nuevos_runs = []
+
+        # Fusión de los runs de dos en dos
         for i in range(0, len(runs), 2):
             if i + 1 < len(runs):
                 fusion = merge_files(runs[i], runs[i + 1])
-                print(f"Fusionando {runs[i]} + {runs[i+1]} → {fusion}")
+                print(f"Fusionando {runs[i]} + {runs[i + 1]} → {fusion}")
                 nuevos_runs.append(fusion)
             else:
+                # Si queda un run sin pareja, se pasa al siguiente ciclo
                 nuevos_runs.append(runs[i])
+
         runs = nuevos_runs
         paso += 1
-    print("Resultado final:", runs[0])
+
+    print("\nResultado final:", runs[0])
     return runs[0]
+
+
+# ------------------------------------------------------------
+# PRUEBA RÁPIDA
+# ------------------------------------------------------------
+# Ejemplo de uso:
+# Cada run representa un bloque ya ordenado previamente.
+runs_iniciales = [
+    [3, 15, 27],
+    [1, 8, 19],
+    [4, 12, 20],
+    [2, 7, 25],
+    [5, 11, 18]
+]
+
+polyphase_sort(runs_iniciales)

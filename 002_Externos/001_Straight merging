@@ -1,6 +1,21 @@
+#        ALGORITMO: STRAIGHT MERGE SORT (Mezcla directa)
+# Descripción:
+#   Este algoritmo divide el arreglo en pequeños "runs" (bloques)
+#   que se ordenan individualmente. Luego, estos runs se van
+#   fusionando de forma sucesiva hasta obtener un solo arreglo
+#   completamente ordenado.
+#
+#   Es una implementación del método de ordenamiento por mezcla,
+#   pero con divisiones de tamaño fijo (mezcla directa).
+# ============================================================
+# FUNCIÓN AUXILIAR: merge_files()
+# Une (fusiona) dos listas ordenadas en una sola lista ordenada.
+# ------------------------------------------------------------
 def merge_files(run1, run2):
-    result = []
-    i = j = 0
+    result = []     # Lista resultado donde se guardará la fusión
+    i = j = 0       # Índices para recorrer cada lista
+
+    # Mientras queden elementos en ambas listas
     while i < len(run1) and j < len(run2):
         if run1[i] < run2[j]:
             result.append(run1[i])
@@ -8,28 +23,54 @@ def merge_files(run1, run2):
         else:
             result.append(run2[j])
             j += 1
+
+    # Agregar los elementos restantes de cada lista (si hay)
     result.extend(run1[i:])
     result.extend(run2[j:])
+
     return result
 
+
+# ------------------------------------------------------------
+# FUNCIÓN PRINCIPAL: straight_merge_sort()
+# Realiza el ordenamiento del arreglo usando mezcla directa.
+# ------------------------------------------------------------
 def straight_merge_sort(arr, run_size=2):
-    print("Inicio de Straight Merging Sort")
+    """
+    Ordena una lista usando el algoritmo de mezcla directa (Straight Merge Sort).
     
-    # 1️⃣ Crear runs ordenados
-    runs = [sorted(arr[i:i+run_size]) for i in range(0, len(arr), run_size)]
+    Parámetros:
+        arr (list): Lista de elementos a ordenar.
+        run_size (int): Tamaño inicial de los bloques o "runs" a ordenar.
+    """
+
+    print("Inicio del algoritmo Straight Merging Sort")
+
+    # 1️⃣ Crear los "runs" iniciales (bloques pequeños ordenados)
+    runs = [sorted(arr[i:i + run_size]) for i in range(0, len(arr), run_size)]
     print("Runs iniciales:", runs)
-    
-    # 2️⃣ Fusión sucesiva
+
+    # 2️⃣ Mezclar los runs sucesivamente hasta quedar con uno solo
     while len(runs) > 1:
-        nuevos_runs = []
+        nuevos_runs = []  # Lista temporal para las nuevas fusiones
         for i in range(0, len(runs), 2):
             if i + 1 < len(runs):
+                # Fusión de dos runs consecutivos
                 fusion = merge_files(runs[i], runs[i + 1])
                 nuevos_runs.append(fusion)
-                print(f"Fusionando {runs[i]} + {runs[i+1]} → {fusion}")
+                print(f"Fusionando {runs[i]} + {runs[i + 1]} → {fusion}")
             else:
+                # Si hay un run sin pareja, se mantiene igual
                 nuevos_runs.append(runs[i])
-        runs = nuevos_runs
-    
-    print("Resultado final:", runs[0])
+        runs = nuevos_runs  # Actualizamos la lista de runs
+
+    print("\nResultado final:", runs[0])
     return runs[0]
+
+
+# ------------------------------------------------------------
+# PRUEBA RÁPIDA
+# ------------------------------------------------------------
+# Descomenta para probar el algoritmo:
+mi_lista = [38, 27, 43, 3, 9, 82, 10]
+straight_merge_sort(mi_lista)
