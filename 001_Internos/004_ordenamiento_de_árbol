@@ -1,11 +1,40 @@
-# Nodo del árbol
+# ALGORITMO: TREE SORT (Ordenamiento usando árbol binario)
+# Descripción:
+#   Este algoritmo ordena los elementos insertándolos en un
+#   Árbol Binario de Búsqueda (BST). Luego realiza un recorrido
+#   "inorden" (izquierda → raíz → derecha), el cual devuelve
+#   los valores en orden ascendente.
+#
+#   Es eficiente si el árbol queda balanceado, pero puede ser
+#   lento si se desbalancea (por ejemplo, si los datos ya
+#   están casi ordenados).
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Clase Nodo
+# ------------------------------------------------------------
+# Representa cada elemento del árbol binario.
+# Cada nodo tiene:
+#   - un valor
+#   - una referencia a su hijo izquierdo
+#   - una referencia a su hijo derecho
+# ------------------------------------------------------------
 class Nodo:
     def __init__(self, valor):
-        self.valor = valor
-        self.izq = None
-        self.der = None
+        self.valor = valor   # Dato almacenado en el nodo
+        self.izq = None      # Hijo izquierdo
+        self.der = None      # Hijo derecho
 
-# Inserta un valor en el árbol
+
+# ------------------------------------------------------------
+# Función: insertar(raiz, valor)
+# ------------------------------------------------------------
+# Inserta un valor dentro del árbol binario.
+# Si la raíz es None, se crea un nuevo nodo.
+# Si el valor es menor, se inserta a la izquierda.
+# Si el valor es mayor o igual, se inserta a la derecha.
+# ------------------------------------------------------------
 def insertar(raiz, valor):
     if raiz is None:
         return Nodo(valor)
@@ -15,21 +44,54 @@ def insertar(raiz, valor):
         raiz.der = insertar(raiz.der, valor)
     return raiz
 
-# Recorre el árbol en orden
+
+# ------------------------------------------------------------
+# Función: recorrido_inorden(raiz, resultado)
+# ------------------------------------------------------------
+# Realiza un recorrido "inorden" del árbol:
+#   1. Visita subárbol izquierdo
+#   2. Visita nodo actual
+#   3. Visita subárbol derecho
+# Almacena los valores en la lista 'resultado' en orden ascendente.
+# ------------------------------------------------------------
 def recorrido_inorden(raiz, resultado):
     if raiz:
         recorrido_inorden(raiz.izq, resultado)
         resultado.append(raiz.valor)
         recorrido_inorden(raiz.der, resultado)
 
-# Algoritmo principal
+
+# ------------------------------------------------------------
+# Función principal: tree_sort(arr)
+# ------------------------------------------------------------
+# Construye el árbol binario con los elementos del arreglo y
+# luego realiza el recorrido inorden para obtener el arreglo ordenado.
+# ------------------------------------------------------------
 def tree_sort(arr):
     print("Inicio del algoritmo Tree Sort")
-    raiz = None
+
+    raiz = None  # Raíz del árbol inicialmente vacía
+
+    # Insertamos cada elemento del arreglo en el árbol
     for valor in arr:
         raiz = insertar(raiz, valor)
         print(f"Insertado {valor} en el árbol")
+
+    # Realizamos recorrido inorden para obtener los valores ordenados
     resultado = []
     recorrido_inorden(raiz, resultado)
-    print("Recorrido en orden (resultado ordenado):", resultado)
+
+    print("\nRecorrido en orden (resultado ordenado):", resultado)
+    print("Proceso completado con éxito.\n")
     return resultado
+
+
+# ============================================================
+# BLOQUE DE PRUEBA
+# ------------------------------------------------------------
+# Creamos una lista de ejemplo, ejecutamos el algoritmo y
+# mostramos el resultado paso a paso.
+# ============================================================
+
+mi_lista = [50, 30, 20, 40, 70, 60, 80]
+tree_sort(mi_lista)

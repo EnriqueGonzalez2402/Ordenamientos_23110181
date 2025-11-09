@@ -1,12 +1,42 @@
+# ALGORITMO: BUBBLE SORT (Ordenamiento de burbuja)
+# Descripción:
+#   Este algoritmo recorre repetidamente el arreglo y compara
+#   pares de elementos adyacentes. Si están en el orden incorrecto,
+#   los intercambia. Este proceso se repite hasta que el arreglo
+#   esté completamente ordenado.
+#
+#   Es sencillo de entender, aunque no muy eficiente para listas grandes.
+# ============================================================
 
 def bubble_sort(arr):
     print("Inicio del algoritmo Bubble Sort")
-    n = len(arr)
+
+    n = len(arr)  # Guardamos la longitud del arreglo
+
+    # Recorremos el arreglo n veces
     for i in range(n):
         print(f"\nPasada {i+1}: {arr}")
+
+        # En cada pasada, los elementos más grandes "suben" al final
         for j in range(0, n - i - 1):
+            # Comparamos elementos adyacentes
             if arr[j] > arr[j + 1]:
-                print(f"Intercambiando {arr[j]} y {arr[j+1]}")
+                # Si están en el orden incorrecto, los intercambiamos
+                print(f"Intercambiando {arr[j]} y {arr[j + 1]}")
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+    # Cuando termina el bucle, el arreglo queda ordenado
     print("\nArreglo final ordenado:", arr)
+    print("Proceso completado con éxito.\n")
     return arr
+
+
+# ============================================================
+# BLOQUE DE PRUEBA
+# ------------------------------------------------------------
+# Definimos una lista de ejemplo y llamamos a la función para
+# ver cómo se ejecuta paso a paso.
+# ============================================================
+
+mi_lista = [64, 34, 25, 12, 22, 11, 90]
+bubble_sort(mi_lista)

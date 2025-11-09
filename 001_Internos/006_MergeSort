@@ -1,28 +1,69 @@
+# ALGORITMO: MERGE SORT (Ordenamiento por mezcla)
+# Descripción:
+#   Merge Sort es un algoritmo de ordenamiento de tipo
+#   "divide y vencerás". Divide el arreglo en mitades
+#   recursivamente hasta obtener listas de un solo elemento
+#   (ya ordenadas por naturaleza), y luego las combina (merge)
+#   en orden ascendente.
+# ============================================================
+
+
 def merge_sort(arr, profundidad=0):
-    indent = "  " * profundidad
+    """
+    Ordena una lista usando el algoritmo Merge Sort.
+    Parámetros:
+        arr: lista de elementos a ordenar
+        profundidad: nivel de recursión (solo para fines visuales)
+    """
+    indent = "  " * profundidad  # Sangría visual según nivel de recursión
     print(f"{indent}MergeSort → {arr}")
-    
+
+    # Caso base: una lista de tamaño 1 o 0 ya está ordenada
     if len(arr) <= 1:
         return arr
-    
+
+    # Dividimos el arreglo a la mitad
     mid = len(arr) // 2
     izquierda = merge_sort(arr[:mid], profundidad + 1)
     derecha = merge_sort(arr[mid:], profundidad + 1)
-    
+
+    # Mezclamos (fusionamos) las dos mitades ya ordenadas
     fusionado = merge(izquierda, derecha)
     print(f"{indent}Fusión de {izquierda} + {derecha} = {fusionado}")
     return fusionado
 
+
 def merge(left, right):
-    resultado = []
-    i = j = 0
+    """
+    Fusiona dos listas ordenadas (left y right) en una sola lista ordenada.
+    """
+    resultado = []  # Lista que contendrá el resultado final
+    i = j = 0       # Índices para recorrer las listas left y right
+
+    # Comparamos los elementos de ambas listas uno por uno
     while i < len(left) and j < len(right):
         if left[i] < right[j]:
-            resultado.append(left[i])
+            resultado.append(left[i])  # Tomamos el menor elemento
             i += 1
         else:
             resultado.append(right[j])
             j += 1
+
+    # Agregamos los elementos restantes (si los hay)
     resultado.extend(left[i:])
     resultado.extend(right[j:])
+
     return resultado
+
+
+# ============================================================
+# BLOQUE DE PRUEBA
+# ------------------------------------------------------------
+# Definimos una lista de ejemplo y ejecutamos Merge Sort
+# para ver cómo se divide y combina el arreglo paso a paso.
+# ============================================================
+
+mi_lista = [38, 27, 43, 3, 9, 82, 10]
+print("Inicio del algoritmo Merge Sort\n")
+resultado = merge_sort(mi_lista)
+print("\nLista final ordenada:", resultado)

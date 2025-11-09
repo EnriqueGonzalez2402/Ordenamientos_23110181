@@ -1,18 +1,43 @@
+# Descripción:
+#   Este algoritmo ordena una lista comparando todos los
+#   elementos y colocando el menor en su posición correcta
+#   en cada iteración.
+# ============================================================
+
 def selection_sort(arr):
     print("Inicio del algoritmo Selection Sort")
+
+    # Guardamos la longitud del arreglo para usarla en los bucles
     n = len(arr)
+
+    # Recorremos todos los elementos del arreglo
     for i in range(n):
+        # Suponemos que el elemento actual es el menor
         min_idx = i
         print(f"\nIteración {i+1}: arreglo actual → {arr}")
-        
-        # Buscar el menor elemento del resto del arreglo
+
+        # Buscamos el elemento más pequeño en el resto del arreglo
         for j in range(i + 1, n):
+            # Si encontramos un valor más pequeño, actualizamos el índice
             if arr[j] < arr[min_idx]:
                 min_idx = j
-        
-        # Intercambiamos si encontramos un elemento menor
+
+        # Si encontramos un valor menor, lo intercambiamos con el actual
         if min_idx != i:
             print(f"Intercambiando {arr[i]} con {arr[min_idx]}")
             arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
+    # Cuando termina el bucle, el arreglo está completamente ordenado
     print("\nArreglo final ordenado:", arr)
     return arr
+
+
+# ============================================================
+# BLOQUE DE PRUEBA
+# ------------------------------------------------------------
+# Aquí definimos una lista de ejemplo y llamamos a la función
+# para verificar que el algoritmo funciona correctamente.
+# ============================================================
+
+mi_lista = [64, 25, 12, 22, 11]
+selection_sort(mi_lista)

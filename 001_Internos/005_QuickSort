@@ -1,14 +1,54 @@
+# ALGORITMO: QUICK SORT (Ordenamiento rápido)
+# Descripción:
+#   QuickSort es un algoritmo de ordenamiento de tipo "divide
+#   y vencerás". Selecciona un elemento llamado pivote y divide
+#   el arreglo en tres partes:
+#     - Izquierda: elementos menores al pivote
+#     - Centro: elementos iguales al pivote
+#     - Derecha: elementos mayores al pivote
+#
+#   Luego aplica el mismo proceso recursivamente en las partes
+#   izquierda y derecha.
+# ============================================================
+
+
 def quicksort(arr, profundidad=0):
-    indent = "  " * profundidad
+    """
+    Ordena una lista usando el algoritmo QuickSort.
+    Parámetros:
+        arr: lista de elementos a ordenar
+        profundidad: nivel de recursión (usado solo para identar la salida visual)
+    """
+    indent = "  " * profundidad  # Crea una indentación visual según la profundidad recursiva
     print(f"{indent}QuickSort → {arr}")
+
+    # Caso base: si la lista tiene 0 o 1 elemento, ya está ordenada
     if len(arr) <= 1:
         return arr
+
+    # Elegimos un pivote: en este caso, el elemento central
     pivote = arr[len(arr) // 2]
     print(f"{indent}Pivote elegido: {pivote}")
-    
-    izquierda = [x for x in arr if x < pivote]
-    centro = [x for x in arr if x == pivote]
-    derecha = [x for x in arr if x > pivote]
-    
+
+    # Separamos los elementos en tres listas
+    izquierda = [x for x in arr if x < pivote]   # Menores que el pivote
+    centro = [x for x in arr if x == pivote]     # Iguales al pivote
+    derecha = [x for x in arr if x > pivote]     # Mayores que el pivote
+
     print(f"{indent}Izquierda: {izquierda}, Centro: {centro}, Derecha: {derecha}")
-    return quicksort(izquierda, profundidad+1) + centro + quicksort(derecha, profundidad+1)
+
+    # Llamada recursiva en las sublistas izquierda y derecha
+    return quicksort(izquierda, profundidad + 1) + centro + quicksort(derecha, profundidad + 1)
+
+
+# ============================================================
+# BLOQUE DE PRUEBA
+# ------------------------------------------------------------
+# Definimos una lista de ejemplo y ejecutamos QuickSort para
+# observar su comportamiento paso a paso.
+# ============================================================
+
+mi_lista = [10, 7, 8, 9, 1, 5]
+print("Inicio del algoritmo QuickSort\n")
+resultado = quicksort(mi_lista)
+print("\nLista final ordenada:", resultado)

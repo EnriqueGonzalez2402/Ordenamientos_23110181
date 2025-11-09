@@ -1,18 +1,35 @@
-def counting_sort(arr, exp):
-    n = len(arr)
-    salida = [0] * n
-    conteo = [0] * 10  # dígitos 0–9
+# Algoritmo: Radix Sort
+# Descripción: Ordena números enteros utilizando el conteo por dígitos.
+# Incluye impresión paso a paso para visualización del proceso.
+# -----------------------------------------------------------
 
-    # Conteo de ocurrencias
+# Función auxiliar: Counting Sort (por dígito)
+def counting_sort(arr, exp):
+    """
+    Esta función realiza el conteo y ordenamiento estable de los elementos
+    según el dígito representado por 'exp' (1 → unidades, 10 → decenas, etc.)
+    """
+
+    n = len(arr)                    # Tamaño del arreglo
+    salida = [0] * n                # Arreglo temporal para guardar el orden parcial
+    conteo = [0] * 10               # Contador para los dígitos del 0 al 9
+
+    # -------------------------------
+    # 1. Contar ocurrencias de cada dígito
+    # -------------------------------
     for i in range(n):
-        indice = (arr[i] // exp) % 10
-        conteo[indice] += 1
-    
-    # Acumulado
+        indice = (arr[i] // exp) % 10   # Extrae el dígito actual
+        conteo[indice] += 1             # Incrementa el conteo para ese dígito
+
+    # -------------------------------
+    # 2. Convertir conteo a posición acumulada
+    # -------------------------------
     for i in range(1, 10):
-        conteo[i] += conteo[i - 1]
-    
-    # Construcción de salida (orden estable)
+        conteo[i] += conteo[i - 1]      # Cada posición indica la cantidad de elementos ≤ a ese dígito
+
+    # -------------------------------
+    # 3. Construir el arreglo de salida en orden estable
+    # -------------------------------
     i = n - 1
     while i >= 0:
         indice = (arr[i] // exp) % 10
@@ -20,17 +37,43 @@ def counting_sort(arr, exp):
         conteo[indice] -= 1
         i -= 1
 
-    # Copiar resultado al arreglo original
+    # -------------------------------
+    # 4. Copiar el resultado al arreglo original
+    # -------------------------------
     for i in range(n):
         arr[i] = salida[i]
 
+
+# ------------------------------ #
+#        RADIX SORT PRINCIPAL    #
+# ------------------------------ #
 def radix_sort(arr):
+    """
+    Ordena un arreglo de números enteros positivos
+    usando el algoritmo Radix Sort.
+    Se basa en ordenar los números dígito a dígito,
+    desde las unidades hasta los más significativos.
+    """
+
     print("Inicio del algoritmo Radix Sort")
+    
+    # Encuentra el número máximo para saber cuántos dígitos se necesitan
     max_num = max(arr)
-    exp = 1
+    exp = 1   # Comienza con las unidades
+
+    # Repite counting_sort para cada posición decimal
     while max_num // exp > 0:
         print(f"\nOrdenando por dígito (exp={exp}): {arr}")
         counting_sort(arr, exp)
-        exp *= 10
-    print("Arreglo final ordenado:", arr)
+        exp *= 10   # Pasa al siguiente dígito (decenas, centenas, etc.)
+
+    print("\nArreglo final ordenado:", arr)
     return arr
+
+
+# ------------------------------ #
+#           PRUEBA RÁPIDA        #
+# ------------------------------ #
+# Descomenta para probar:
+mi_lista = [170, 45, 75, 90, 802, 24, 2, 66]
+radix_sort(mi_lista)
